@@ -72,7 +72,7 @@ public class RegisterPlugins implements Startable {
     long now = system.now();
     try (DbSession dbSession = dbClient.openSession(false)) {
       Map<String, PluginDto> allPreviousPluginsByKey = dbClient.pluginDao().selectAll(dbSession).stream()
-        .collect(Collectors.toMap(PluginDto::getKey, identity()));
+        .collect(Collectors.toMap(PluginDto::getKee, identity()));
       for (PluginInfo pluginInfo : pluginInfos) {
         RemotePlugin remotePlugin = RemotePlugin.create(pluginInfo);
         String newJarMd5 = remotePlugin.file().getHash();
@@ -81,7 +81,7 @@ public class RegisterPlugins implements Startable {
           LOG.debug("Register new plugin {}", pluginInfo.getKey());
           PluginDto pluginDto = new PluginDto()
             .setUuid(uuidFactory.create())
-            .setKey(pluginInfo.getKey())
+            .setKee(pluginInfo.getKey())
             .setBasePluginKey(pluginInfo.getBasePlugin())
             .setJarMd5(newJarMd5)
             .setCreatedAt(now)
