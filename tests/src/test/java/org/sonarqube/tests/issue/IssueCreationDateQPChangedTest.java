@@ -45,7 +45,7 @@ import static util.ItUtils.projectDir;
 /**
  * @see <a href="https://jira.sonarsource.com/browse/MMF-567">MMF-567</a>
  */
-public class IssueCreationDateTest extends AbstractIssueTest {
+public class IssueCreationDateQPChangedTest extends AbstractIssueTest {
 
   private static final String ISSUE_STATUS_OPEN = "OPEN";
 
@@ -277,8 +277,8 @@ public class IssueCreationDateTest extends AbstractIssueTest {
   private static final Component[] COMPONENTS_OF_SOURCE_CHANGED = {Component.ForeverAndModified, Component.ForeverAndUnmodified, Component.OnlyInChanged};
 
   private enum QProfile {
-    ONE_RULE("/issue/IssueCreationDateTest/one-rule.xml"),
-    NO_RULES("/issue/IssueCreationDateTest/no-rules.xml"),
+    ONE_RULE("/issue/IssueCreationDateQPChangedTest/one-rule.xml"),
+    NO_RULES("/issue/IssueCreationDateQPChangedTest/no-rules.xml"),
     ;
 
     private final String path;
@@ -371,7 +371,7 @@ public class IssueCreationDateTest extends AbstractIssueTest {
           .getAnalysesList())
         .flatMap(chooseItem)
         .map(ProjectAnalyses.Analysis::getDate)
-        .map(IssueCreationDateTest::dateTimeParse)
+        .map(IssueCreationDateQPChangedTest::dateTimeParse)
         .orElseThrow(() -> new IllegalStateException("There is no analysis"));
     }
   }
