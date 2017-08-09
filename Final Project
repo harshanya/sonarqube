@@ -1,0 +1,71 @@
+//#include "etherShield.h"
+//#include "ETHER_28J60.h"
+
+ #include <SPI.h>
+#include <Ethernet.h>
+#include <MultiShiftRegister.h>
+
+int Redpin    = 3;    //for Red LED
+int Greenpin = 5;   //for yellow LED
+int Bluepin  = 6;
+
+byte data = 0b00000000;
+MultiShiftRegister msr(3, Redpin, Greenpin, Bluepin);
+
+static uint8_t mac[6] = {0xAA, 0xBB, 0xCC, 0xDD, 0xBB, 0xAA};                
+static uint8_t ip[4] = {192, 168, 8, 106};
+static uint16_t port = 80;
+
+//ETHER_28J60 e;
+EthernetClient client;
+void setup()
+{
+Ethernet.begin(mac, ip, port);  
+pinMode(Redpin, OUTPUT);
+pinMode(Greenpin, OUTPUT);
+pinMode(Bluepin, OUTPUT);
+Serial.begin(9600);
+msr.shift();
+}
+
+
+void loop()
+{
+  
+  char* params;
+ 
+//-----------------------------------------------------------------  
+
+ //if (params = Ethernet.serviceRequest())
+  {
+    
+if (strcmp(params, "?cmd=3") == 0)
+    {
+      msr.set_shift(1);
+    }
+    
+    if (strcmp(params, "?cmd=4") == 0)
+    {
+      msr.clear_shift(1);   
+    }
+    if (strcmp(params, "?cmd=5") == 0)
+    {
+      msr.set_shift(2);
+    }
+    
+    if (strcmp(params, "?cmd=6") == 0)
+    {
+      msr.clear_shift(2);   
+    }
+    if (strcmp(params, "?cmd=7") == 0)
+    {
+      msr.set_shift(3);
+    }
+    
+    if (strcmp(params, "?cmd=4") == 0)
+    {
+      msr.clear_shift(3);   
+    }
+}
+}
+//-----------------------------------------------------------------
